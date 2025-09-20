@@ -1,7 +1,7 @@
 import streamlit as st
-import random    
-import requests    
-import json    
+import random                    
+import requests                                                    
+import json                                                    
 from streamlit_calendar import calendar
 from datetime import datetime
 from xml.etree import ElementTree as ET
@@ -12,11 +12,11 @@ from xml.etree import ElementTree as ET
 
 def get_weather(city, api_key):
     base_url = "https://api.openweathermap.org/data/2.5/weather"
-    params = {    
-        'q': city,    
-        'appid': api_key,    
+    params = {                                                    
+        'q': city,                                                    
+        'appid': api_key,                                                    
         'units': 'metric',
-        'lang': 'kr'    
+        'lang': 'kr'                                                    
     }
     try:  
         response = requests.get(base_url, params=params, timeout=5)
@@ -233,3 +233,4 @@ if reset_button:
     st.session_state.picked_numbers = []
 
     st.rerun()
+
