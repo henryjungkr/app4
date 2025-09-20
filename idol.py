@@ -1,7 +1,7 @@
 import streamlit as st
-import random                    
-import requests                                                    
-import json                                                    
+import random
+import requests
+import json
 from streamlit_calendar import calendar
 from datetime import datetime
 from xml.etree import ElementTree as ET
@@ -12,19 +12,19 @@ from xml.etree import ElementTree as ET
 
 def get_weather(city, api_key):
     base_url = "https://api.openweathermap.org/data/2.5/weather"
-    params = {                                                    
-        'q': city,                                                    
-        'appid': api_key,                                                    
+    params = {
+        'q': city,
+        'appid': api_key,
         'units': 'metric',
-        'lang': 'kr'                                                    
+        'lang': 'kr'
     }
-    try:  
+    try:
         response = requests.get(base_url, params=params, timeout=5)
-        response.raise_for_status()  
+        response.raise_for_status()
         data = response.json()
         
         if data['cod'] == 200:
-            weather = {  
+            weather = {
                 'description': data['weather'][0]['description'],
                 'icon': data['weather'][0]['icon'],
                 'temperature': data['main']['temp']
@@ -206,31 +206,29 @@ with col2:
                         icon_url = f"https://openweathermap.org/img/wn/{weather_data['icon']}@2x.png"
                         
                         sub_col1, sub_col2 = st.columns([0.7, 0.3])
-                        with sub_col1:
+                        with sub_col1:  
                             st.metric("현재 기온", f"{weather_data['temperature']} °C")
                             st.write(f"날씨: **{weather_data['description']}**")
-                        with sub_col2:
+                        with sub_col2:  
                             st.image(icon_url)
-                    else:
+                    else:  
                         st.error("날씨 정보를 가져오는 데 실패했습니다. 도시 이름을 확인하거나 잠시 후 다시 시도해주세요.")
-                except KeyError:
+                except KeyError:  
                     st.error("OpenWeatherMap API Key를 `.streamlit/secrets.toml` 파일에 `api_key = 'YOUR_API_KEY'` 형식으로 설정해주세요.")
 
 #-----------------------------------------------------------------
 # 3. 추첨 이력 표시
 #-----------------------------------------------------------------
 
-st.divider()
+st.divider()  
 st.subheader("📜 **추첨된 좌석 번호**")
 recent_picks = st.session_state.picked_numbers[-5:]
-if recent_picks:
+if recent_picks:  
     st.markdown(f"**최근 5회 추첨 결과:** {recent_picks}")
-else:
+else:  
     st.write("아직 추첨된 번호가 없습니다.")
     
 reset_button = st.button("⚠️ 추첨 이력 초기화", key="reset_button")
-if reset_button:
+if reset_button:  
     st.session_state.picked_numbers = []
-
-    st.rerun()
-
+    st.rerun()  
