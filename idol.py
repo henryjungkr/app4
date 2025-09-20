@@ -1,7 +1,7 @@
 import streamlit as st
-import random
-import requests
-import json
+import random    
+import requests    
+import json    
 from streamlit_calendar import calendar
 from datetime import datetime
 from xml.etree import ElementTree as ET
@@ -12,19 +12,19 @@ from xml.etree import ElementTree as ET
 
 def get_weather(city, api_key):
     base_url = "https://api.openweathermap.org/data/2.5/weather"
-    params = {
-        'q': city,
-        'appid': api_key,
+    params = {    
+        'q': city,    
+        'appid': api_key,    
         'units': 'metric',
-        'lang': 'kr'
+        'lang': 'kr'    
     }
-    try:
+    try:  
         response = requests.get(base_url, params=params, timeout=5)
-        response.raise_for_status()
+        response.raise_for_status()  
         data = response.json()
         
         if data['cod'] == 200:
-            weather = {
+            weather = {  
                 'description': data['weather'][0]['description'],
                 'icon': data['weather'][0]['icon'],
                 'temperature': data['main']['temp']
@@ -231,4 +231,5 @@ else:
 reset_button = st.button("⚠️ 추첨 이력 초기화", key="reset_button")
 if reset_button:
     st.session_state.picked_numbers = []
+
     st.rerun()
